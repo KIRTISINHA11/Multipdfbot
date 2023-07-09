@@ -1,3 +1,4 @@
+import streamlit as st
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
@@ -6,7 +7,6 @@ from langchain.vectorstores import FAISS
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
-from htmlTemplates import css, bot_template, user_template
 from langchain.llms import HuggingFaceHub
 
 def get_pdf_text(pdf_docs):
@@ -52,9 +52,9 @@ def handle_userinput(user_question, conversation_chain):
 
     for i, message in enumerate(chat_history):
         if i % 2 == 0:
-            print(user_template.replace("{{MSG}}", message.content))
+            st.write("User:", message.content)
         else:
-            print(bot_template.replace("{{MSG}}", message.content))
+            st.write("Bot:", message.content)
 
 def main():
     load_dotenv()
